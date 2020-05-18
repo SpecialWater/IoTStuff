@@ -48,7 +48,7 @@ async def main():
             tempData = json.loads(input_message.data)
             temperature = tempData['temperature']
 
-            print("Message received at forwarding message to output1 at {0}".format(datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S"))
+            print("Message received at forwarding message to output1 at {0}".format(datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S")))
             print(temperature)
 
             if temperature > 79:

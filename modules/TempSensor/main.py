@@ -44,7 +44,7 @@ async def main():
 
             if tempOld != temp['temperature']:
                 print(temp['temperature'])
-                print("forwarding message to output1 at {0}".format(datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S"))
+                print("forwarding message to output1 at {0}".format(datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S")))
                 tempOld=temp['temperature']
                 await module_client.send_message_to_output(json_body, "output1")
 
