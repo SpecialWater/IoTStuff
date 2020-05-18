@@ -11,5 +11,4 @@ RUN apt-get update \
 
 COPY . .
 
-EXPOSE 1-9999
 CMD [ "python3", "-u", "./main.py" ]

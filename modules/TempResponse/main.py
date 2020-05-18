@@ -3,13 +3,14 @@
 # full license information.
 
 import time
+import datetime
 import os
 import sys
 import asyncio
 import json
 from six.moves import input
 import threading
-from azure.iot.device import IoTHubModuleClient
+from azure.iot.device.aio import IoTHubModuleClient
 import RPi.GPIO as GPIO
 
 async def main():
@@ -34,22 +35,22 @@ async def main():
 
         # connect the client.
         print("Trying to connect")
-        module_client.connect()
+        await module_client.connect()
 
         # define behavior for receiving an input message on input1
         input_message = 0
         while True:
-            print('Receiving message')
+            print('Awaiting message')
             input_message = await module_client.receive_message_on_input("input1")  # blocking call
-            message = json.loads(input_message)
-            temperature = message['temperature']
-            print("the data in the message received on input1 was ")
+            tempData = json.loads(input_message.data)
+            temperature = tempData['temperature']
+
+            print("Message received at forwarding message to output1 at {0}".format(datetime.datetime.now().time()))
             print(temperature)
+
             if temperature > 79:
-                print('HOT')
                 GPIO.output(21, GPIO.HIGH)
             else:
-                print('COLD')
                 GPIO.output(21, GPIO.LOW)
             time.sleep(.5)
 

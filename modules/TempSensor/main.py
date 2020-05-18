@@ -33,18 +33,23 @@ async def main():
         print("Sensor active")
         data = {}
         data['temperature'] = 0
+        tempOld = 0
 
         # define behavior for receiving an input message on input1
         while True:
             data['temperature'] = sensor.get_temperature() * 9 / 5 + 32
             json_body = json.dumps(data)
-            print(json_body)
             temp = json.loads(json_body)
-            
-            print(temp['temperature'])
-            print("forwarding message to output1 at {0}".format(datetime.datetime.now().time()))
-            await module_client.send_message_to_output(json_body, "output1")
+
+            if tempOld != temp['temperature']:
+                print(temp['temperature'])
+                print("forwarding message to output1 at {0}".format(datetime.datetime.now().time()))
+                tempOld = temp['temperature']
+                await module_client.send_message_to_output(json_body, "output1")
+
+            # For testing by sending data to EndPoint
             # await module_client.send_message(json_body)
+
             time.sleep(.5)
 
     except Exception as e:

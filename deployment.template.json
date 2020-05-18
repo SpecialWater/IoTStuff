@@ -58,7 +58,7 @@
         },
         "modules": {
           "TempSensor": {
-            "version": "1.02",
+            "version": "1.05",
             "type": "docker",
             "status": "running",
             "restartPolicy": "always",
@@ -72,7 +72,7 @@
             }
           },
           "TempResponse": {
-            "version": "1.02",
+            "version": "1.12",
             "type": "docker",
             "status": "running",
             "restartPolicy": "always",
@@ -92,8 +92,7 @@
       "properties.desired": {
         "schemaVersion": "1.0",
         "routes": {
-          "TempSensorToTempResponse": "FROM /messages/modules/TempSensor/outputs/* INTO BrokeredEndpoint(\"/modules/TempResponse/inputs/input1\")",
-          "TempSensorToIoTHub": "FROM /messages/modules/TempSensor/outputs/* INTO $upstream"
+          "TempSensorToTempResponse": "FROM /messages/modules/TempSensor/outputs/* INTO BrokeredEndpoint(\"/modules/TempResponse/inputs/input1\")"
         },
         "storeAndForwardConfiguration": {
           "timeToLiveSecs": 7200
