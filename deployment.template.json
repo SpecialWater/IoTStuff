@@ -58,7 +58,7 @@
         },
         "modules": {
           "TempSensor": {
-            "version": "1.01",
+            "version": "1.02",
             "type": "docker",
             "status": "running",
             "restartPolicy": "always",
@@ -72,7 +72,7 @@
             }
           },
           "TempResponse": {
-            "version": "1.01",
+            "version": "1.02",
             "type": "docker",
             "status": "running",
             "restartPolicy": "always",
