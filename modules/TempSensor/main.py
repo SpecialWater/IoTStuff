@@ -21,10 +21,10 @@ async def main():
         print("IoT Hub Client for Python")
 
         # The client object is used to interact with your Azure IoT hub.
-        module_client = IoTHubModuleClient.create_from_edge_environment()
-        IoTHubModuleClient.create_from_edge_environment()
-        #conn_str = "HostName=AndrewPiProject.azure-devices.net;DeviceId=RPi4;SharedAccessKey=FoUWxLuoWLZxKWN/ytg6qMCk0dWHSiWaysIart2CD/s="
-        #module_client = IoTHubModuleClient.create_from_connection_string(conn_str)
+        # module_client = IoTHubModuleClient.create_from_edge_environment()
+        # IoTHubModuleClient.create_from_edge_environment()
+        conn_str = "HostName=AndrewPiProject.azure-devices.net;DeviceId=RPi4;SharedAccessKey=FoUWxLuoWLZxKWN/ytg6qMCk0dWHSiWaysIart2CD/s="
+        module_client = IoTHubModuleClient.create_from_connection_string(conn_str)
 
         # connect the client.
         await module_client.connect()
@@ -49,19 +49,15 @@ async def main():
                 data['temperature'] = sensor.get_temperature() * 9 / 5 + 32
                 json_body = json.dumps(data)
                 temp = json.loads(json_body)
+                print(temp)
             except:
-                time.sleep(1)
+                time.sleep(.5)
             
             if temp != "" and tempOld != temp['temperature']:
                 print(temp['temperature'])
                 print("forwarding message to output1 at {0}".format(datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S")))
                 tempOld=temp['temperature']
                 await module_client.send_message_to_output(json_body, "output1")
-
-            # For testing by sending data to EndPoint
-            # await module_client.send_message(json_body)
-
-            time.sleep(.5)
 
     except Exception as e:
         print("Unexpected error %s " % e)
