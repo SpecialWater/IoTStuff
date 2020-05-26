@@ -21,10 +21,10 @@ async def main():
         print("IoT Hub Client for Python")
 
         # The client object is used to interact with your Azure IoT hub.
-        # module_client = IoTHubModuleClient.create_from_edge_environment()
-        # IoTHubModuleClient.create_from_edge_environment()
-        conn_str = "HostName=AndrewPiProject.azure-devices.net;DeviceId=RPi4;SharedAccessKey=FoUWxLuoWLZxKWN/ytg6qMCk0dWHSiWaysIart2CD/s="
-        module_client = IoTHubModuleClient.create_from_connection_string(conn_str)
+        module_client = IoTHubModuleClient.create_from_edge_environment()
+        IoTHubModuleClient.create_from_edge_environment()
+        # conn_str = "HostName=AndrewPiProject.azure-devices.net;DeviceId=RPi4;SharedAccessKey=FoUWxLuoWLZxKWN/ytg6qMCk0dWHSiWaysIart2CD/s="
+        # module_client = IoTHubModuleClient.create_from_connection_string(conn_str)
 
         # connect the client.
         await module_client.connect()
