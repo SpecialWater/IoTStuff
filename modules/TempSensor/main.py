@@ -23,26 +23,36 @@ async def main():
         # The client object is used to interact with your Azure IoT hub.
         module_client = IoTHubModuleClient.create_from_edge_environment()
         IoTHubModuleClient.create_from_edge_environment()
-        # conn_str = "HostName=AndrewPiProject.azure-devices.net;DeviceId=RPi4;SharedAccessKey=FoUWxLuoWLZxKWN/ytg6qMCk0dWHSiWaysIart2CD/s="
-        # module_client = IoTHubModuleClient.create_from_connection_string(conn_str)
+        #conn_str = "HostName=AndrewPiProject.azure-devices.net;DeviceId=RPi4;SharedAccessKey=FoUWxLuoWLZxKWN/ytg6qMCk0dWHSiWaysIart2CD/s="
+        #module_client = IoTHubModuleClient.create_from_connection_string(conn_str)
 
         # connect the client.
         await module_client.connect()
 
         # Connect Sensor
-        sensor = W1ThermSensor()
-        print("Sensor active")
+        while True:
+            try:
+                sensor = W1ThermSensor()
+                print("Sensor active")
+                break
+            except:
+                pass
+
         data = {}
         data['temperature'] = 0
         tempOld = 0
+        temp = ""
 
         # define behavior for receiving an input message on input1
         while True:
-            data['temperature'] = sensor.get_temperature() * 9 / 5 + 32
-            json_body = json.dumps(data)
-            temp = json.loads(json_body)
-
-            if tempOld != temp['temperature']:
+            try:
+                data['temperature'] = sensor.get_temperature() * 9 / 5 + 32
+                json_body = json.dumps(data)
+                temp = json.loads(json_body)
+            except:
+                time.sleep(1)
+            
+            if temp != "" and tempOld != temp['temperature']:
                 print(temp['temperature'])
                 print("forwarding message to output1 at {0}".format(datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S")))
                 tempOld=temp['temperature']
